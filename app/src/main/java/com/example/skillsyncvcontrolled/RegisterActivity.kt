@@ -48,8 +48,12 @@ class RegisterActivity : AppCompatActivity() {
             } else {
                 skills.error = null
             }
-            val userProfile=UserProfile(n,p,s)
+            val userProfile=UserProfile(n,p)
+            val userSkill = UserSkill(n,s.split(","))
+
+            // Inserting data...
             dbHelper.insertData(userProfile)
+            dbHelper.insertSkill(userSkill)
         }
     }
 }
