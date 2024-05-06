@@ -16,23 +16,6 @@
 
 <!--    </FrameLayout>-->
 
-    <TextView
-        android:id="@+id/json"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="136dp"
-        android:layout_marginBottom="408dp"
-        android:textSize="25sp"
-        android:text="welcome"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.474"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.176" />
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
@@ -64,12 +47,12 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="72dp"
-        android:layout_height="40dp"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="42dp"
-        android:layout_marginBottom="665dp"
+        android:layout_marginEnd="47dp"
+        android:layout_marginBottom="666dp"
         android:background="@color/black"
         android:outlineAmbientShadowColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -96,17 +79,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.047" />
-
-    <Button
-        android:id="@+id/recbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="283dp"
-        android:layout_marginBottom="513dp"
-        android:text="Button" />
-
 
 
 </RelativeLayout>

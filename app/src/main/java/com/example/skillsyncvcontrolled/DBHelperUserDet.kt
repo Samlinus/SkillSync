@@ -61,6 +61,7 @@ class DatabaseHelper(private val context: Context): SQLiteOpenHelper(context,DBN
 
     }
 
+    // Inserting skill
     fun insertSkill(userSkill: UserSkill) {
         val db = this.writableDatabase
         // Inserting each skill
@@ -74,17 +75,39 @@ class DatabaseHelper(private val context: Context): SQLiteOpenHelper(context,DBN
         }
     }
 
+    // Checking for user
+    fun findUser(user: UserProfile): Boolean {
+        val db = this.readableDatabase
+        val selectQuery =
+            "select * from $TBNAME1 where $COLNAME = '${user.name}' AND $COLPASS = '${user.password}'"
+        val cursor = db.rawQuery(selectQuery, null)
+        val status = cursor.moveToFirst()
+        cursor.close()
+        return status
+    }
 
+    // Reading skills
+    fun getSkills(user: UserProfile): List<String>{
+        val db = this.readableDatabase
+        var skillList = mutableListOf<String>()
+        val selectQuery =
+            "select skills from $TBNAME2 where $COLNAME = '${user.name}'"
+        val cursor = db.rawQuery(selectQuery,null)
+        if (cursor.moveToFirst()){
+            Toast.makeText(context,"Retrieving skills..",Toast.LENGTH_SHORT).show()
+            do{
+                skillList.add(
+                    cursor.getString(
+                        cursor.getColumnIndexOrThrow(COLSKILLS)
+                    )
+                )
 
-        fun findUser(user: UserProfile): Boolean {
-            val db = this.readableDatabase
-            val selectQuery =
-                "select * from $TBNAME1 where $COLNAME = '${user.name}' AND $COLPASS = '${user.password}'"
-            val cursor = db.rawQuery(selectQuery, null)
-            val status = cursor.moveToFirst()
-            cursor.close()
-            return status
+            }while (cursor.moveToNext())
+        }
+        else
+            Toast.makeText(context,"No skills found",Toast.LENGTH_SHORT).show()
 
+        return skillList
     }
 
 }

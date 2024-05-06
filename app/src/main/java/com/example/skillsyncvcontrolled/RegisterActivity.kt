@@ -21,9 +21,11 @@ class RegisterActivity : AppCompatActivity() {
         submit = findViewById(R.id.button2)
         dbHelper = DatabaseHelper(this)
         submit.setOnClickListener {
+
             val n = name.editText?.text?.toString()
             val p = pwd.editText?.text?.toString()
             val s = skills.editText?.text?.toString()
+            // Checking if name is empty
             if (n.isNullOrEmpty()) {
                 name.error = "* Required"
                 Toast.makeText(applicationContext, "Name Field is Empty!!", Toast.LENGTH_SHORT)
@@ -32,6 +34,7 @@ class RegisterActivity : AppCompatActivity() {
             } else {
                 name.error = null
             }
+            // Checking if password is empty
             if (p.isNullOrEmpty()) {
                 pwd.error = "* Required"
                 Toast.makeText(applicationContext, "Password Field is Empty!!", Toast.LENGTH_SHORT)
@@ -40,6 +43,7 @@ class RegisterActivity : AppCompatActivity() {
             } else {
                 pwd.error = null
             }
+            // Checking if skills are empty
             if (s.isNullOrEmpty()) {
                 skills.error = "* Required"
                 Toast.makeText(applicationContext, "Skills Field is Empty!!", Toast.LENGTH_SHORT)
@@ -48,6 +52,7 @@ class RegisterActivity : AppCompatActivity() {
             } else {
                 skills.error = null
             }
+
             val userProfile=UserProfile(n,p)
             val userSkill = UserSkill(n,s.split(","))
 
