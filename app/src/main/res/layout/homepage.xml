@@ -5,12 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/fl_wrapper"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/bottom_navigation"
-        tools:ignore="UnknownId" />
+<!--    <FrameLayout-->
+<!--        android:id="@+id/fl_wrapper"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_above="@+id/bottom_navigation"-->
+<!--        tools:ignore="UnknownId" />-->
+
+
+
+<!--    </FrameLayout>-->
+
+    <TextView
+        android:id="@+id/json"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="136dp"
+        android:layout_marginBottom="408dp"
+        android:textSize="25sp"
+        android:text="welcome"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.474"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.176" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -25,12 +46,12 @@
 
     <TextView
         android:id="@+id/textView13"
-        android:layout_width="332dp"
-        android:layout_height="77dp"
+        android:layout_width="195dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="42dp"
-        android:layout_marginBottom="567dp"
+        android:layout_marginEnd="179dp"
+        android:layout_marginBottom="609dp"
         android:text="WELCOME "
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -75,5 +96,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.047" />
+
+    <Button
+        android:id="@+id/recbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="283dp"
+        android:layout_marginBottom="513dp"
+        android:text="Button" />
+
+
 
 </RelativeLayout>

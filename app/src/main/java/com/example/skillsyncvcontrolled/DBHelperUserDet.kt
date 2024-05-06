@@ -41,8 +41,8 @@ class DatabaseHelper(private val context: Context): SQLiteOpenHelper(context,DBN
     }
 
     override fun onUpgrade(db: SQLiteDatabase1?, oldVersion: Int, newVersion: Int) {
-        db?.execSQL("DROP TABLE IF EXISTS $TBNAME1")
-        db?.execSQL("DROP TABLE IF EXISTS $TBNAME2")
+//        db?.execSQL("DROP TABLE IF EXISTS $TBNAME1")
+//        db?.execSQL("DROP TABLE IF EXISTS $TBNAME2")
         onCreate(db)
     }
 
