@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.launch
 
 
 class LoginActivity : AppCompatActivity() {
@@ -68,10 +70,15 @@ class LoginActivity : AppCompatActivity() {
                     // Starting thread
                     // Sending data to django server..
                     // dbHelper.getSkills() - Retrieves the skills
-                    sendSkillsThread(dbHelper.getSkills(UserProfile(n,p)),jsonObject).start()
+//                    SendSkillsThread(dbHelper.getSkills(UserProfile(n,p)),jsonObject).start()
 
+                    //
+                    lifecycleScope.launch {
+                        println("Response: "+serverResponse(dbHelper.getSkills(UserProfile(n,p)),jsonObject))
+                        startActivity(homeActivityIntent)
+                    }
                     // Starting home activity..
-                    startActivity(homeActivityIntent)
+
                 }
                 else{
                     Toast.makeText(this, "User Not Found", Toast.LENGTH_SHORT).show()
@@ -80,10 +87,16 @@ class LoginActivity : AppCompatActivity() {
 
         }
     }
-}
 
-class sendSkillsThread(val skills: List<String>,val jsonObject: JSONCommunication):Thread(){
-    override fun run(){
-        jsonObject.sendData(skills)
+    private suspend fun serverResponse(skills: List<String>, jsonObject: JSONCommunication){
+        println(jsonObject.sendData(skills))
     }
 }
+
+
+
+//class SendSkillsThread(private val skills: List<String>, private val jsonObject: JSONCommunication):Thread(){
+//    override fun run(){
+//        println(jsonObject.sendData(skills))
+//    }
+//}
