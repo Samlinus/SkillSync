@@ -8,6 +8,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 
@@ -19,6 +20,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var dbHelper: DatabaseHelper
     private lateinit var jsonObject: JSONCommunication
     private lateinit var homeActivityIntent: Intent
+    private lateinit var collaborateActivityIntent: Intent
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -63,18 +65,19 @@ class LoginActivity : AppCompatActivity() {
                 val up=UserProfile(n,p)
                 if(dbHelper.findUser(up)){
                     // Home activity intent
+                    collaborateActivityIntent = Intent(this,CollaborateActivity::class.java)
                     homeActivityIntent= Intent(this,HomeActivity::class.java)
                     // Sending name to home activity
                     homeActivityIntent.putExtra("name",n)
                     Toast.makeText(this, "User Found", Toast.LENGTH_SHORT).show()
-                    // Starting thread
-                    // Sending data to django server..
-                    // dbHelper.getSkills() - Retrieves the skills
-//                    SendSkillsThread(dbHelper.getSkills(UserProfile(n,p)),jsonObject).start()
 
-                    //
                     lifecycleScope.launch {
-                        println("Response: "+serverResponse(dbHelper.getSkills(UserProfile(n,p)),jsonObject))
+                        val response = serverResponse(dbHelper.getSkills(UserProfile(n,p)),jsonObject)
+                        // filtering only user names from the json
+                        val user_names = filterSkill(response)
+                        println("User names: $user_names")
+                        homeActivityIntent.putStringArrayListExtra("skillmap",user_names)
+//                        startActivity(collaborateActivityIntent)
                         startActivity(homeActivityIntent)
                     }
                     // Starting home activity..
@@ -88,15 +91,14 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun serverResponse(skills: List<String>, jsonObject: JSONCommunication){
-        println(jsonObject.sendData(skills))
+    private suspend fun serverResponse(skills: List<String>, jsonObject: JSONCommunication): Map<String,List<String>>{
+        return jsonObject.sendData(skills)
+    }
+    private fun filterSkill(map: Map<String,List<String>>): ArrayList<String>{
+        val user_names = ArrayList<String>()
+        for (key in map.keys){
+            user_names.add(key)
+        }
+        return user_names
     }
 }
-
-
-
-//class SendSkillsThread(private val skills: List<String>, private val jsonObject: JSONCommunication):Thread(){
-//    override fun run(){
-//        println(jsonObject.sendData(skills))
-//    }
-//}

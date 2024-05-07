@@ -22,6 +22,8 @@ class HomeActivity : AppCompatActivity() {
         jsonObject = JSONCommunication()
 
         val name = intent.getStringExtra("name")
+        println("Home page")
+        val user_names = intent.getStringArrayListExtra("skillmap")
         val currentText = txt.text.toString()
         appendText = "$currentText $name"
         txt.text = appendText
@@ -51,6 +53,7 @@ class HomeActivity : AppCompatActivity() {
                 R.id.ic_feed-> {
                     //makeCurrentFragment(FeedFragment())
                     val intent = Intent(this, CollaborateActivity::class.java)
+                    intent.putStringArrayListExtra("skillmap",user_names)
                     startActivity(intent)
                     true
                 }
