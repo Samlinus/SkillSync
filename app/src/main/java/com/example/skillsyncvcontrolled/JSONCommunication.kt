@@ -1,7 +1,6 @@
 package com.example.skillsyncvcontrolled
 
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import okhttp3.FormBody
 import okhttp3.OkHttpClient
@@ -10,12 +9,10 @@ import okio.IOException
 import org.json.JSONObject
 
 
-
 class JSONCommunication {
     private val url = "http://10.0.2.2:8000/skillsync/post/"
 
     suspend fun sendData(skills: List<String>): Map<String, List<String>> {
-        lateinit var responseMap: Map<String, List<String>>
 
         return withContext(Dispatchers.IO) {
             val postBody = FormBody.Builder()
@@ -45,13 +42,12 @@ class JSONCommunication {
         val jsonObject = JSONObject(responseData)
         val userSkillsMap = HashMap<String, List<String>>()
         for (key in jsonObject.keys()) {
-            val user = key
             val skillsArray = jsonObject.getJSONArray(key)
             val skillList = ArrayList<String>()
             for (i in 0 until skillsArray.length()) {
                 skillList.add(skillsArray.getString(i))
             }
-            userSkillsMap[user] = skillList
+            userSkillsMap[key] = skillList
         }
         return userSkillsMap
     }

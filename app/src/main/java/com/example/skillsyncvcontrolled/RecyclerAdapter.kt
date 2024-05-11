@@ -16,7 +16,7 @@ class RecyclerAdapter(private var name: List<String>, private var skills: List<S
         val itemImages: ImageView = itemView.findViewById(R.id.iv_image)
 
         init {
-            itemView.setOnClickListener{v : View->
+            itemView.setOnClickListener{
                 val position: Int = adapterPosition
                 Toast.makeText(itemView.context, "You clicked on item # ${position+1}",Toast.LENGTH_SHORT).show()
             }

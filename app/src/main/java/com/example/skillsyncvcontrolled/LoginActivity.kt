@@ -1,14 +1,15 @@
 package com.example.skillsyncvcontrolled
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 
@@ -21,6 +22,8 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var jsonObject: JSONCommunication
     private lateinit var homeActivityIntent: Intent
     private lateinit var collaborateActivityIntent: Intent
+    private lateinit var progressBar: ProgressBar
+    private lateinit var overlay: View
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -31,6 +34,8 @@ class LoginActivity : AppCompatActivity() {
         login=findViewById(R.id.button)
         dbHelper = DatabaseHelper(this)
         txt=findViewById(R.id.textView5)
+
+
         jsonObject = JSONCommunication()
 
 
@@ -41,7 +46,9 @@ class LoginActivity : AppCompatActivity() {
 
         // When Login button is clicked..
         login.setOnClickListener {
-
+            setContentView(R.layout.progressbar_layout)
+            progressBar = findViewById(R.id.progressBar)
+            overlay = findViewById(R.id.overlay)
             val n= name.editText?.text?.toString()
             val p=pwd.editText?.text?.toString()
             // validating name
@@ -70,17 +77,18 @@ class LoginActivity : AppCompatActivity() {
                     // Sending name to home activity
                     homeActivityIntent.putExtra("name",n)
                     Toast.makeText(this, "User Found", Toast.LENGTH_SHORT).show()
-
+                    progressBar.visibility = View.VISIBLE
+                    overlay.visibility = View.VISIBLE
                     lifecycleScope.launch {
                         val response = serverResponse(dbHelper.getSkills(UserProfile(n,p)),jsonObject)
                         // filtering only user names from the json
                         val user_names = filterSkill(response)
                         println("User names: $user_names")
                         homeActivityIntent.putStringArrayListExtra("skillmap",user_names)
-//                        startActivity(collaborateActivityIntent)
+
                         startActivity(homeActivityIntent)
+                        setContentView(R.layout.activity_login)
                     }
-                    // Starting home activity..
 
                 }
                 else{

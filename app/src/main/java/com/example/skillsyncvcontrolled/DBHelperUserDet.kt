@@ -89,7 +89,7 @@ class DatabaseHelper(private val context: Context): SQLiteOpenHelper(context,DBN
     // Reading skills
     fun getSkills(user: UserProfile): List<String>{
         val db = this.readableDatabase
-        var skillList = mutableListOf<String>()
+        val skillList = mutableListOf<String>()
         val selectQuery =
             "select skills from $TBNAME2 where $COLNAME = '${user.name}'"
         val cursor = db.rawQuery(selectQuery,null)
